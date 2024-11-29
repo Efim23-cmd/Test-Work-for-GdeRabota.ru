@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* Alias */
+    "paths": {
+			"@styles/*": ["./src/shared/styles/*"],
+			"@type/*": ["./src/shared/types/*"],
+			"@utils/*": ["./src/shared/utils/*"],
+			"@hooks/*": ["./src/shared/hooks/*"],
+			"@static/*": ["./src/shared/static/*"],
+			"@api/*": ["./src/shared/api/*"],
+			"@atoms/*": ["./src/atoms/*"],
+			"@molecules/*": ["./src/molecules/*"],
+			"@organisms/*": ["./src/organism/*"],
+			"@templates/*": ["./src/features/*"],
+			"@pages/*": ["./src/pages/*"],
+			"@public/*": ["./public/*"],
+		}
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
