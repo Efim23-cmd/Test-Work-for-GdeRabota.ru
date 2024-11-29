@@ -1,0 +1,7 @@
+.paper {
+	@apply border border-gray-200 bg-white shadow shadow-dark-md;
+}
+
+.rounded {
+	@apply rounded-md;
+}

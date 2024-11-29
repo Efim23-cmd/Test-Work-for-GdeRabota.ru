@@ -9,84 +9,61 @@ export const theme = {
 	extend: {
 		colors: {
 			primary: {
-				DEFAULT: '#89FFF1',
+				DEFAULT: '#304ac1',
 			},
-			white: {
-				DEFAULT: '#ffffff',
-				8: 'rgba(255, 255, 255, 0.08)',
-				20: 'rgba(255, 255, 255, 0.20)',
-				36: 'rgba(255, 255, 255, 0.36)',
-				52: 'rgba(255, 255, 255, 0.52)',
-				68: 'rgba(255, 255, 255, 0.68)',
-				84: 'rgba(255, 255, 255, 0.84)',
+			info: {
+				DEFAULT: '#20a1ff',
+			},
+			success: {
+				DEFAULT: '#65d83c',
+			},
+			error: {
+				DEFAULT: '#ef4f39',
 			},
 			grey: {
-				8: 'rgba(23, 23, 24, 0.08)',
-				20: 'rgba(23, 23, 24, 0.20)',
-				36: 'rgba(23, 23, 24, 0.36)',
-				52: 'rgba(23, 23, 24, 0.52)',
-				68: 'rgba(23, 23, 24, 0.68)',
-				84: 'rgba(23, 23, 24, 0.84)',
-				100: '#C1C1C2',
-				200: '#9FA0A5',
-				300: '#7E7F85',
-				400: '#6D6E73',
-				500: '#55565B',
-				600: '#48494E',
-				700: '#2F3033',
-				800: '#222325',
-				900: '#171718',
-				1000: '#151515',
+				8: '#eceff0',
+				20: '#d2d5d6',
+				36: '#aeb0b5',
+				52: '#898e94',
+				68: '#666c77',
+				84: '#404a53',
+				100: '#eef1f3',
+				200: '#d9dee2',
+				300: '#bfc6cc',
+				400: '#a9b2b9',
+				500: '#919ba3',
+				600: '#7b858f',
+				700: '#5e6a74',
+				800: '#434d56',
+				900: '#232c34',
+				1000: '#1a2128',
 			},
 		},
-		fontFamily: {
-			sans: ['Inter', ..._fontFamily.sans],
-		},
 		fontSize: {
-			'h1-desktop': ['34px', { fontWeight: 600 }],
-			'h1-mobile': ['26px', { fontWeight: 600 }],
-			'h2-desktop': ['26px', { fontWeight: 600 }],
-			'h2-mobile': ['24px', { fontWeight: 600 }],
-			'h3-desktop': ['24px', { fontWeight: 600 }],
-			'h3-mobile': ['20px', { fontWeight: 600 }],
-			'h4-desktop': ['20px', { fontWeight: 600 }],
-			'h4-mobile': ['18px', { fontWeight: 600 }],
-			'h5-desktop': ['18px', { fontWeight: 600 }],
-			'h5-mobile': ['16px', { fontWeight: 600 }],
-			'h6-desktop': ['16px', { fontWeight: 600 }],
-			'h6-mobile': ['16px', { fontWeight: 600 }],
+			title: [
+				'28px',
+				{
+					fontFamily: 'Inter',
+					fontWeight: 400,
+					lineHeight: 1.3,
+				},
+			],
 			'body-0': ['20px'],
 			'body-1': ['18px'],
 			'body-2': ['16px'],
 			'body-3': ['14px'],
-			'caption-1': ['12px'],
-			'caption-2': [
-				'12px',
-				{
-					fontWeight: 600,
-				},
-			],
-			'subtitle-0': [
-				'18px',
-				{
-					fontWeight: 600,
-				},
-			],
-			'subtitle-1': [
-				'16px',
-				{
-					fontWeight: 600,
-				},
-			],
-			'subtitle-2': [
+			button: [
 				'14px',
 				{
-					fontWeight: 600,
+					fontFamily: 'Inter',
+					fontWeight: 400,
+					height: 0.09,
+					lineHeight: '18px',
 				},
 			],
-			'button-sm': ['14px'],
-			'button-md': ['16px'],
-			'button-lg': ['18px'],
+		},
+		fontFamily: {
+			sans: ['Inter', ..._fontFamily.sans],
 		},
 		borderRadius: {
 			none: '0',
@@ -97,13 +74,8 @@ export const theme = {
 			xl: '16px',
 			full: '50%',
 		},
-		backgroundImage: {
-			body: 'linear-gradient(180deg, #2F3033 0px, #151515 151px)',
-			'gradient-primary': 'linear-gradient(90deg, #A8FFDC, #89FFF1)',
-		},
 		boxShadow: {
-			'dark-md': '0 4px 4px rgb(0 0 0 / 25%)',
-			footer: '0 0px 70px 0px #081D79',
+			'dark-md': '0 25px 40px -10px #1C273114',
 		},
 	},
 	screens: {

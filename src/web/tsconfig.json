@@ -1,43 +1,42 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
+	"compilerOptions": {
+		"target": "ES2020",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"skipLibCheck": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"noEmit": true,
+		"jsx": "react-jsx",
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
 
-    /* Alias */
-    "paths": {
-			"@styles/*": ["./src/shared/styles/*"],
-			"@type/*": ["./src/shared/types/*"],
-			"@utils/*": ["./src/shared/utils/*"],
-			"@hooks/*": ["./src/shared/hooks/*"],
-			"@static/*": ["./src/shared/static/*"],
-			"@api/*": ["./src/shared/api/*"],
-			"@atoms/*": ["./src/atoms/*"],
-			"@molecules/*": ["./src/molecules/*"],
-			"@organisms/*": ["./src/organism/*"],
-			"@templates/*": ["./src/features/*"],
-			"@pages/*": ["./src/pages/*"],
-			"@public/*": ["./public/*"],
+		/* Alias */
+		"paths": {
+			"@styles/*": ["./src/components/shared/styles/*"],
+			"@type/*": ["./src/components/shared/types/*"],
+			"@utils/*": ["./src/components/shared/utils/*"],
+			"@hooks/*": ["./src/components/shared/hooks/*"],
+			"@static/*": ["./src/components/shared/static/*"],
+			"@api/*": ["./src/components/shared/api/*"],
+			"@atoms/*": ["./src/components/atoms/*"],
+			"@molecules/*": ["./src/components/molecules/*"],
+			"@organisms/*": ["./src/components/organism/*"],
+			"@templates/*": ["./src/components/templates/*"],
+			"@pages/*": ["./src/components/pages/*"],
+			"@public/*": ["./public/*"]
 		}
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }
