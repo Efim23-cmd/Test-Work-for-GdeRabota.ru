@@ -1,0 +1,27 @@
+.field {
+	@apply flex flex-col;
+}
+
+.fullWidth {
+	@apply w-full;
+}
+
+.disabled {
+	@apply text-gray-400;
+}
+
+.error .field__helperText {
+	@apply text-error;
+}
+
+.field__label {
+	@apply mb-[4px] text-body-2 text-grey-800;
+}
+
+.field__required {
+	@apply ml-[4px] font-normal text-primary;
+}
+
+.field__helperText {
+	@apply mt-[4px] line-clamp-3 text-body-2 text-grey-600;
+}
