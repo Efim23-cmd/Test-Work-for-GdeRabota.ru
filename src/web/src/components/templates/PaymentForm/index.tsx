@@ -132,6 +132,7 @@ export const PaymentForm = () => {
 							label="Номер карты"
 							className="col-span-2"
 							placeholder="0000 0000 0000 0000"
+							autoComplete="cc-number"
 							fullWidth
 							value={cardNumberField.value}
 							onChange={cardNumberField.handleChange}
@@ -143,6 +144,7 @@ export const PaymentForm = () => {
 							name="expire"
 							label="Месяц/Год"
 							placeholder="Default"
+							autoComplete="cc-exp"
 							value={expireField.value}
 							onChange={expireField.handleChange}
 							onBlur={expireField.handleBlur}
@@ -153,6 +155,7 @@ export const PaymentForm = () => {
 							name="cvc"
 							label="Код"
 							placeholder="***"
+							autoComplete="cc-csc"
 							value={cvcField.value}
 							onChange={cvcField.handleChange}
 							onBlur={cvcField.handleBlur}
@@ -164,6 +167,7 @@ export const PaymentForm = () => {
 							label="Владелец карты"
 							className="col-span-2"
 							placeholder="IVAN IVANOV"
+							autoComplete="cc-name"
 							fullWidth
 							value={cardholderField.value}
 							onChange={cardholderField.handleChange}
