@@ -16,6 +16,8 @@ import {
 import styles from './styles.module.css';
 import { yearAndMonth } from '@utils/validator/formatters/yearAndMonth';
 
+import { PasswordInput } from '@molecules/PasswordInput';
+
 export const PaymentForm = () => {
 	const cardNumber = useTextFormField({
 		formatter: numberCard,
@@ -80,7 +82,7 @@ export const PaymentForm = () => {
 							helperText={monthAndYear.error}
 							error={!!monthAndYear.error}
 						/>
-						<Input
+						<PasswordInput
 							label="Код"
 							placeholder="***"
 							value={code.value}
