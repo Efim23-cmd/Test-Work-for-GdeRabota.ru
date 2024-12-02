@@ -1,5 +1,7 @@
 version: "3.9"
 
+name: test-task
+
 services:
   nginx_local:
     image: nginx:1.25.3-alpine

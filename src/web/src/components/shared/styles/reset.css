@@ -28,9 +28,15 @@ li {
 a,
 button,
 input {
-	&:focus-visible {
-		outline: none;
-		border: none;
-		transform: scale(1.05);
-	}
+	background-image: none;
+	background-color: transparent;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+
+a,
+button,
+input {
+	outline: none;
 }

@@ -1,23 +1,46 @@
 import { useId } from 'react';
 
 import { Paper } from '@atoms/Paper';
-import Input from '@atoms/Input';
+import { Input } from '@atoms/Input';
 import { Button } from '@atoms/Button';
 
 import useForm from '@hooks/useForm';
 import useTextFormField, { TextField } from '@hooks/useTextFormField';
 
-import { maxLength, minLength, required } from '@utils/validator';
+import {
+	isDate,
+	maxLength,
+	minLength,
+	numberCard,
+	required,
+} from '@utils/validator';
 
 import styles from './styles.module.css';
+import { yearAndMonth } from '@utils/validator/formatters/yearAndMonth';
 
 export const PaymentForm = () => {
-	const cardNumberInputId = useId();
-	const cardNumber = useTextFormField(cardNumberInputId, {
+	const cardNumber = useTextFormField({
+		formatter: numberCard,
 		validators: [
 			required('Необходимо заполнить "Номер карты".'),
 			minLength(16),
 			maxLength(16),
+		],
+	});
+
+	const monthAndYear = useTextFormField({
+		formatter: yearAndMonth,
+		validators: [
+			required('Необходимо заполнить "Месяц/Год".'),
+			isDate('MM/YY'),
+		],
+	});
+
+	const owner = useTextFormField({
+		validators: [
+			required('Необходимо заполнить "Владелец карты".'),
+			minLength(10),
+			maxLength(30),
 		],
 	});
 
@@ -45,20 +68,32 @@ export const PaymentForm = () => {
 							className="col-span-2"
 							placeholder="0000 0000 0000 0000"
 							fullWidth
-							id={cardNumber.id}
 							value={cardNumber.value}
 							onChange={cardNumber.handleChange}
 							onBlur={cardNumber.handleBlur}
 							helperText={cardNumber.error}
 							error={!!cardNumber.error}
 						/>
-						<Input label="Месяц/Год" placeholder="Default" />
+						<Input
+							label="Месяц/Год"
+							placeholder="Default"
+							value={monthAndYear.value}
+							onChange={monthAndYear.handleChange}
+							onBlur={monthAndYear.handleBlur}
+							helperText={monthAndYear.error}
+							error={!!monthAndYear.error}
+						/>
 						<Input label="Код" placeholder="***" />
 						<Input
 							label="Владелец карты"
 							className="col-span-2"
 							placeholder="IVAN IVANOV"
 							fullWidth
+							value={owner.value}
+							onChange={owner.handleChange}
+							onBlur={owner.handleBlur}
+							helperText={owner.error}
+							error={!!owner.error}
 						/>
 					</div>
 				</div>

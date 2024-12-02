@@ -17,24 +17,28 @@ type TextField = DefaultField & {
 };
 
 type Parameters = {
-	formatter?: Formatter<string>;
+	formatter?: Formatter;
 	init?: string;
 	validators: Validator<string>[];
 };
 
-function useTextFormField(
-	id: string,
-	{ init = '', formatter, validators }: Parameters,
-): TextField {
+function useTextFormField({
+	init = '',
+	formatter,
+	validators,
+}: Parameters): TextField {
 	const [value, setValue] = useState(init);
-	const [error, setError] = useState<ValidationResult | null>(null);
+	const [error, setError] = useState<ValidationResult>(null);
 
 	const handleChange = useCallback(
 		async (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
 			const val = event.target.value;
 
 			if (formatter) {
-				setValue(formatter(val));
+				const result = formatter(val);
+				if (result) {
+					setValue(result);
+				}
 			} else {
 				setValue(val);
 			}
@@ -55,9 +59,8 @@ function useTextFormField(
 	}, [value, validators]);
 
 	return {
-		id,
 		value,
-		error,
+		error: error ?? '',
 		hasError,
 		handleChange,
 		handleBlur,

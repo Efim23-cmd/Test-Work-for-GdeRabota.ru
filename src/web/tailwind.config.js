@@ -10,6 +10,7 @@ export const theme = {
 		colors: {
 			primary: {
 				DEFAULT: '#304ac1',
+				dark: '#1A2C88',
 			},
 			info: {
 				DEFAULT: '#20a1ff',

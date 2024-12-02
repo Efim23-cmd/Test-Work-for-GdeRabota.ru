@@ -2,7 +2,7 @@ import { GetValidator } from '../type';
 
 const DEFAULT_MAX_CHAR_COUNT = 100;
 
-const maxLength: GetValidator<number, string> = (
+export const maxLength: GetValidator<number, string> = (
 	maxCharCount = DEFAULT_MAX_CHAR_COUNT,
 ) => {
 	if (maxCharCount <= 0) {
@@ -16,5 +16,3 @@ const maxLength: GetValidator<number, string> = (
 			? null
 			: `Количество символов не должно превышать ${maxCharCount}`;
 };
-
-export default maxLength;
