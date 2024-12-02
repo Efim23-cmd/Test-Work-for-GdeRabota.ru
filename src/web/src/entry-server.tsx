@@ -1,3 +1,5 @@
+import '@styles/globals.css';
+
 import { StrictMode } from 'react';
 import {
 	type RenderToPipeableStreamOptions,
