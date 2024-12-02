@@ -2,9 +2,11 @@ import clsx from 'clsx';
 
 import { createElement, ForwardedRef, forwardRef } from 'react';
 
-import styles from './styles.module.css';
 import { ReactTag } from '@type/mutationComponent';
+
 import { PaperProps } from './types';
+
+import styles from './styles.module.css';
 
 function PaperInner<TTag extends ReactTag>(
 	{ as, className, rounded = true, children, ...other }: PaperProps<TTag>,
@@ -21,6 +23,7 @@ function PaperInner<TTag extends ReactTag>(
 				},
 				className,
 			),
+			...other,
 		},
 		children,
 	);
