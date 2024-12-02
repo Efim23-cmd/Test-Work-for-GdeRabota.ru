@@ -7,10 +7,19 @@ import styles from './styles.module.css';
 export const Icon = ({
 	className,
 	size = 'md',
+	label,
 	icon: IconInner,
-}: IconProps) => (
-	<IconInner
-		aria-hidden="true"
-		className={clsx(styles.icon, styles[size], className)}
-	/>
-);
+}: IconProps) =>
+	typeof IconInner === 'function' ? (
+		<IconInner
+			aria-hidden="true"
+			aria-label={label}
+			className={clsx(styles.icon, styles[size], className)}
+		/>
+	) : (
+		<img
+			className={clsx(styles.icon, styles[size], className)}
+			src={IconInner}
+			alt={label}
+		/>
+	);
