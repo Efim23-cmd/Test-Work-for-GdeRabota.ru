@@ -1,61 +1,84 @@
 import clsx from 'clsx';
 
-import { forwardRef } from 'react';
+import { ForwardedRef, forwardRef, useId } from 'react';
+
+import { Field } from '@atoms/Field';
+import { Icon } from '@atoms/Icon';
 
 import type { InputProps } from './types';
 
 import styles from './styles.module.css';
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
 	(
 		{
 			type = 'text',
+			id: idProp,
 			className,
-			value,
 			helperText,
 			label,
 			error,
-			required,
 			disabled,
+			required,
 			inputClassName,
-			readOnly,
 			fullWidth,
-			...inputProps
-		},
-		ref,
-	) => (
-		<div className={clsx(styles.input, className)}>
-			<label className={styles.input__label}>{label}</label>
-			<input
-				type={type}
+			textStart,
+			textEnd,
+			iconStartProps,
+			iconEndProps,
+			...other
+		}: InputProps,
+		ref: ForwardedRef<HTMLInputElement>,
+	) => {
+		const nestedId = useId();
+		const id = idProp ?? nestedId;
+
+		return (
+			<Field
+				id={id}
+				className={className}
+				label={label}
+				helperText={helperText}
+				required={required}
+				error={error}
 				disabled={disabled}
-				{...inputProps}
-				className={clsx(
-					styles.input__container,
-					inputClassName,
-					{
+			>
+				<div
+					className={clsx(styles.input, {
 						[styles.error]: error,
 						[styles.disabled]: disabled,
 						[styles.fullWidth]: fullWidth,
-					},
-					inputClassName,
-				)}
-				required={required}
-				ref={ref}
-				readOnly={readOnly}
-				value={value}
-			/>
-			<span
-				className={clsx('-bottom-5 left-0 text-body-2', {
-					'text-error': error,
-					'text-grey-600 dark:text-grey-400': !error,
-					'text-grey-600': disabled,
-					'line-clamp-3': typeof helperText === 'string',
-				})}
-			>
-				{helperText}
-			</span>
-		</div>
-	),
+					})}
+				>
+					{(iconStartProps || textStart) && (
+						<label
+							htmlFor={id}
+							className={styles.input__label}
+							onClick={iconStartProps?.onClick}
+						>
+							{iconStartProps ? <Icon {...iconStartProps} /> : textStart}
+						</label>
+					)}
+					<input
+						id={nestedId}
+						type={type}
+						ref={ref}
+						disabled={disabled}
+						className={clsx(styles.input__container, inputClassName)}
+						{...other}
+					/>
+					{(iconEndProps || textEnd) && (
+						<label
+							htmlFor={nestedId}
+							className={styles.input__label}
+							onClick={iconEndProps?.onClick}
+						>
+							{iconEndProps ? <Icon {...iconEndProps} /> : textEnd}
+						</label>
+					)}
+				</div>
+			</Field>
+		);
+	},
 );
-export default Input;
+1;

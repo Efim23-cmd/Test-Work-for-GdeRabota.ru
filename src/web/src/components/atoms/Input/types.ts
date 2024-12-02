@@ -1,23 +1,19 @@
-import type {
-	HTMLAttributes,
-	InputHTMLAttributes,
-	MutableRefObject,
-} from 'react';
+import { MouseEvent, InputHTMLAttributes } from 'react';
 
-type IconProps = {
-	icon: React.ReactNode;
-	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	className?: string;
+import { FieldProps } from '@atoms/Field/types';
+import { IconProps } from '@atoms/Icon/types';
+
+type ElementProps = IconProps & {
+	onClick?: (e: MouseEvent<HTMLLabelElement>) => void;
 };
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-	iconStartProps?: IconProps;
-	iconEndProps?: IconProps;
-	label?: string;
-	helperText?: string | null;
-	required?: boolean;
-	state?: boolean;
-	inputClassName?: string;
-	error?: boolean;
-	fullWidth?: boolean;
-}
+export type InputProps = Omit<FieldProps, 'id' | 'children'> &
+	InputHTMLAttributes<HTMLInputElement> & {
+		iconStartProps?: ElementProps;
+		iconEndProps?: ElementProps;
+		textStart?: string;
+		textEnd?: string;
+		helperText?: string;
+		inputClassName?: string;
+		fullWidth?: boolean;
+	};
