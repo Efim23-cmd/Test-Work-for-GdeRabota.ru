@@ -10,7 +10,7 @@
 }
 
 .disabled {
-	@apply cursor-not-allowed bg-grey-68 text-white hover:opacity-80;
+	@apply cursor-not-allowed bg-grey-100 text-grey-400;
 }
 
 /* textAlign */
@@ -37,12 +37,11 @@
 
 /* Sizes */
 .md {
-	@apply text-button px-4 py-3;
+	@apply px-4 py-3 text-button;
 }
 
 /* Colors */
 /* 		Solid */
 .solid.primary:not(.disabled) {
-	@apply bg-primary text-white hover:opacity-80;
+	@apply hover:bg-primary-dark bg-primary text-white;
 }
-
