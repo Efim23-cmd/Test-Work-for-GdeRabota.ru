@@ -1,5 +1,3 @@
-import { useId } from 'react';
-
 import { Paper } from '@atoms/Paper';
 import { Input } from '@atoms/Input';
 import { Button } from '@atoms/Button';
@@ -8,9 +6,9 @@ import useForm from '@hooks/useForm';
 import useTextFormField, { TextField } from '@hooks/useTextFormField';
 
 import {
-	isDate,
-	maxLength,
-	minLength,
+	length,
+	isNumberCard,
+	isYearAndMonth,
 	numberCard,
 	required,
 } from '@utils/validator';
@@ -23,8 +21,7 @@ export const PaymentForm = () => {
 		formatter: numberCard,
 		validators: [
 			required('Необходимо заполнить "Номер карты".'),
-			minLength(16),
-			maxLength(16),
+			isNumberCard(),
 		],
 	});
 
@@ -32,20 +29,20 @@ export const PaymentForm = () => {
 		formatter: yearAndMonth,
 		validators: [
 			required('Необходимо заполнить "Месяц/Год".'),
-			isDate('MM/YY'),
+			isYearAndMonth(),
 		],
+	});
+
+	const code = useTextFormField({
+		validators: [required('Необходимо заполнить "Код".'), length(3)],
 	});
 
 	const owner = useTextFormField({
-		validators: [
-			required('Необходимо заполнить "Владелец карты".'),
-			minLength(10),
-			maxLength(30),
-		],
+		validators: [required('Необходимо заполнить "Владелец карты".')],
 	});
 
 	const { handleFormSubmit, hasFieldErrors } = useForm<TextField, string>({
-		fields: [cardNumber],
+		fields: [cardNumber, monthAndYear, code, owner],
 		apiCall: async () => Promise.resolve('good'),
 		onSuccess: (response: string) => {
 			console.log(response);
@@ -83,7 +80,15 @@ export const PaymentForm = () => {
 							helperText={monthAndYear.error}
 							error={!!monthAndYear.error}
 						/>
-						<Input label="Код" placeholder="***" />
+						<Input
+							label="Код"
+							placeholder="***"
+							value={code.value}
+							onChange={code.handleChange}
+							onBlur={code.handleBlur}
+							helperText={code.error}
+							error={!!code.error}
+						/>
 						<Input
 							label="Владелец карты"
 							className="col-span-2"

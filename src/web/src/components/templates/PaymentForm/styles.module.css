@@ -1,5 +1,5 @@
 .paymentForm {
-	@apply flex max-h-[450px] w-full max-w-[480px] flex-col justify-between gap-3 p-5;
+	@apply flex w-full max-w-[480px] flex-col justify-between gap-3 p-5;
 }
 
 .paymentForm__container {
@@ -11,7 +11,7 @@
 }
 
 .paymentForm__body {
-	@apply grid grid-cols-2 gap-x-20 gap-y-5;
+	@apply grid grid-cols-2 gap-x-5 gap-y-5;
 }
 
 .paymentForm__footer {

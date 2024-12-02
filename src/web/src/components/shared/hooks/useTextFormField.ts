@@ -34,6 +34,11 @@ function useTextFormField({
 		async (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
 			const val = event.target.value;
 
+			if (!val) {
+				setValue('');
+				return;
+			}
+
 			if (formatter) {
 				const result = formatter(val);
 				if (result) {
