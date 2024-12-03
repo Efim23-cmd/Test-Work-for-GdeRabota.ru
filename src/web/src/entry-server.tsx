@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 
 import { Router } from './router';
-import Error, { ErrorProps } from '@pages/Error';
+import ErrorPage, { ErrorProps } from '@pages/Error';
 
 interface IRenderProps extends ErrorProps {
 	path: string;
@@ -12,7 +12,7 @@ interface IRenderProps extends ErrorProps {
 
 export function render({ path, statusCode }: IRenderProps) {
 	if (statusCode) {
-		return ReactDOMServer.renderToString(<Error statusCode={statusCode} />);
+		return ReactDOMServer.renderToString(<ErrorPage statusCode={statusCode} />);
 	}
 
 	const html = ReactDOMServer.renderToString(

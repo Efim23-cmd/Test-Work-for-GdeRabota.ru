@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import { BaseLayout } from '@pages/BaseLayout';
+
 export type ErrorProps = {
 	statusCode?: number;
 };
 
-export default function Error({ statusCode }: ErrorProps) {
+export default function ErrorPage({ statusCode }: ErrorProps) {
 	const [hydrated, setHydrated] = useState(false);
 
 	useEffect(() => {
@@ -15,5 +17,5 @@ export default function Error({ statusCode }: ErrorProps) {
 		return null;
 	}
 
-	return <div>Error, status code: {statusCode}</div>;
+	return <BaseLayout>Error, status code: {statusCode}</BaseLayout>;
 }
