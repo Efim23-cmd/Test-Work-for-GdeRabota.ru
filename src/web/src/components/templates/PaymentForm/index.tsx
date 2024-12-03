@@ -1,10 +1,14 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+
+import { useNavigate } from 'react-router';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import { PasswordInput } from '@molecules/PasswordInput';
+import { ButtonWithSpinner } from '@molecules/ButtonWithSpinner';
 
 import { Paper } from '@atoms/Paper';
 import { Input } from '@atoms/Input';
-import { Button } from '@atoms/Button';
 
 import useForm from '@hooks/useForm';
 import useTextFormField, { TextField } from '@hooks/useTextFormField';
@@ -40,8 +44,15 @@ type Response = {
 	};
 };
 
+const JSON_RPC_VERSION = '2.0';
+
 export const PaymentForm = () => {
+	const [uniqueId] = useState<string>(uuidv4);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const formRef = useRef<HTMLFormElement>(null);
+
+	const navigate = useNavigate();
 
 	const cardNumberField = useTextFormField({
 		formatter: numberCard,
@@ -77,8 +88,8 @@ export const PaymentForm = () => {
 
 				if (pan && expire && cardholder && cvc) {
 					const request: Request = {
-						id: '1',
-						jsonrpc: '2.0',
+						id: uniqueId,
+						jsonrpc: JSON_RPC_VERSION,
 						method: 'pay',
 						params: {
 							pan,
@@ -88,6 +99,7 @@ export const PaymentForm = () => {
 						},
 					};
 
+					setIsLoading(true);
 					const myFetch = await fetch('/api/', {
 						method: 'POST',
 						headers: {
@@ -112,10 +124,13 @@ export const PaymentForm = () => {
 			throw new Error('The form does not exist');
 		},
 		onSuccess: (response: Response) => {
-			console.log(response);
+			if (response.id === uniqueId) {
+				navigate(`/pay/check/${uniqueId}`, { replace: true });
+			}
 		},
 		onError: (error: string) => {
 			console.log(error);
+			setIsLoading(false);
 		},
 	});
 
@@ -178,9 +193,13 @@ export const PaymentForm = () => {
 					</div>
 				</div>
 				<div className={styles.paymentForm__footer}>
-					<Button type="submit" disabled={hasFieldErrors}>
+					<ButtonWithSpinner
+						type="submit"
+						loading={isLoading}
+						disabled={hasFieldErrors}
+					>
 						Оплатить
-					</Button>
+					</ButtonWithSpinner>
 				</div>
 			</Paper>
 		</form>
