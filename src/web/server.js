@@ -1,23 +1,29 @@
-import fs from 'node:fs/promises';
-import express from 'express';
-import { Transform } from 'node:stream';
+import fs from 'node:fs/promises'; // NodeJS async file system module, 'interact' static files
+import express from 'express'; // Express is NodeJS library for building api
+
+/**
+  This file is used to set up a NodeJS Express server to handle SSR for our React application. It dynamically selects the appropriate SSR render function and template based on the environment (development or production) and serves the rendered HTML to clients upon request.
+
+  The server is set up to serve the client-side assets in production and use Vite's middleware in development. The server also reads the SSR manifest file in production to determine the appropriate render function to use.
+ */
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.CLIENT_PORT || 3333;
 const base = process.env.BASE || '/';
-const ABORT_DELAY = 10000;
 
 // Cached production assets
 const templateHtml = isProduction
 	? await fs.readFile('./dist/client/index.html', 'utf-8')
 	: '';
+const ssrManifest = isProduction
+	? await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8')
+	: undefined;
 
 // Create http server
 const app = express();
 
 // Add Vite or respective production middlewares
-/** @type {import('vite').ViteDevServer | undefined} */
 let vite;
 if (!isProduction) {
 	const { createServer } = await import('vite');
@@ -27,6 +33,20 @@ if (!isProduction) {
 		base,
 	});
 	app.use(vite.middlewares);
+
+	app.use(async (req, res, next) => {
+		try {
+			// Custom middleware logic
+			next();
+		} catch (error) {
+			const statusCode = error.status || 500;
+			const html = await vite.transformIndexHtml(
+				req.url,
+				`<h1>${statusCode} Error</h1>`,
+			);
+			res.status(statusCode).set({ 'Content-Type': 'text/html' }).end(html);
+		}
+	});
 } else {
 	const compression = (await import('compression')).default;
 	const sirv = (await import('sirv')).default;
@@ -35,13 +55,12 @@ if (!isProduction) {
 }
 
 // Serve HTML
+// "*home" is Express 5.x syntax for matching all routes
 app.use('*all', async (req, res) => {
 	try {
 		const url = req.originalUrl.replace(base, '');
 
-		/** @type {string} */
 		let template;
-		/** @type {import('./src/entry-server.ts').render} */
 		let render;
 		if (!isProduction) {
 			// Always read fresh template in development
@@ -53,44 +72,13 @@ app.use('*all', async (req, res) => {
 			render = (await import('./dist/server/entry-server.js')).render;
 		}
 
-		let didError = false;
+		const rendered = await render(url, ssrManifest);
 
-		const { pipe, abort } = render(url, {
-			onShellError() {
-				res.status(500);
-				res.set({ 'Content-Type': 'text/html' });
-				res.send('<h1>Something went wrong</h1>');
-			},
-			onShellReady() {
-				res.status(didError ? 500 : 200);
-				res.set({ 'Content-Type': 'text/html' });
+		const html = template
+			.replace(`<!--app-head-->`, rendered.head ?? '')
+			.replace(`<!--app-html-->`, rendered.html ?? '');
 
-				const transformStream = new Transform({
-					transform(chunk, encoding, callback) {
-						res.write(chunk, encoding);
-						callback();
-					},
-				});
-
-				const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
-
-				res.write(htmlStart);
-
-				transformStream.on('finish', () => {
-					res.end(htmlEnd);
-				});
-
-				pipe(transformStream);
-			},
-			onError(error) {
-				didError = true;
-				console.error(error);
-			},
-		});
-
-		setTimeout(() => {
-			abort();
-		}, ABORT_DELAY);
+		res.status(200).set({ 'Content-Type': 'text/html' }).send(html);
 	} catch (e) {
 		vite?.ssrFixStacktrace(e);
 		console.log(e.stack);

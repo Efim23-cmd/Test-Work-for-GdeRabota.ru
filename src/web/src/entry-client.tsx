@@ -1,11 +1,16 @@
 import '@styles/globals.css';
-import { StrictMode } from 'react';
-import { hydrateRoot } from 'react-dom/client';
-import App from './App';
 
-hydrateRoot(
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
+
+import { Router } from './router';
+
+ReactDOM.hydrateRoot(
 	document.getElementById('root') as HTMLElement,
-	<StrictMode>
-		<App />
-	</StrictMode>,
+	<React.StrictMode>
+		<BrowserRouter>
+			<Router />
+		</BrowserRouter>
+	</React.StrictMode>,
 );

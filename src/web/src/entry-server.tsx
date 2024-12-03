@@ -1,17 +1,27 @@
-import '@styles/globals.css';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { StaticRouter } from 'react-router';
 
-import { StrictMode } from 'react';
-import {
-	type RenderToPipeableStreamOptions,
-	renderToPipeableStream,
-} from 'react-dom/server';
-import App from './App';
+import { Router } from './router';
+import Error, { ErrorProps } from '@pages/Error';
 
-export function render(_url: string, options?: RenderToPipeableStreamOptions) {
-	return renderToPipeableStream(
-		<StrictMode>
-			<App />
-		</StrictMode>,
-		options,
+interface IRenderProps extends ErrorProps {
+	path: string;
+	statusCode?: number;
+}
+
+export function render({ path, statusCode }: IRenderProps) {
+	if (statusCode) {
+		return ReactDOMServer.renderToString(<Error statusCode={statusCode} />);
+	}
+
+	const html = ReactDOMServer.renderToString(
+		<React.StrictMode>
+			<StaticRouter location={path}>
+				<Router />
+			</StaticRouter>
+		</React.StrictMode>,
 	);
+
+	return { html };
 }
