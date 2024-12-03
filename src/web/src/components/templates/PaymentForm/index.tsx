@@ -126,7 +126,7 @@ export const PaymentForm = () => {
 		},
 		onSuccess: (response: Response) => {
 			if (response.id === uniqueId) {
-				navigate(`/pay/check/${uniqueId}`, { replace: true });
+				navigate(`/pay/check/${response.result.pid}`, { replace: true });
 			}
 		},
 		onError: (error: string) => {
