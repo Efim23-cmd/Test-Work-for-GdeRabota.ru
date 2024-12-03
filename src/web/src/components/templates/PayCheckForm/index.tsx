@@ -17,7 +17,6 @@ type PayCheckFormProps = {
 };
 
 export const PayCheckForm = ({ pid }: PayCheckFormProps) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [status, setStatus] = useState<Response['status']>('process');
 
 	useEffect(() => {
@@ -25,8 +24,6 @@ export const PayCheckForm = ({ pid }: PayCheckFormProps) => {
 
 		const myPromise = async () => {
 			try {
-				setIsLoading(true);
-
 				const myFetch = await fetch(`/api/pay/check/${pid}`, {
 					method: 'GET',
 					signal: abortController.signal,
@@ -42,18 +39,18 @@ export const PayCheckForm = ({ pid }: PayCheckFormProps) => {
 
 				const response = (await myFetch.json()) as Response;
 
-				setStatus(response.status);
-				console.log(response);
+				if (response.status) {
+					setStatus(response.status);
+				} else {
+					setStatus('fail');
+				}
 			} catch (error) {
 				console.log(error);
-			} finally {
-				setIsLoading(false);
 			}
 		};
 		myPromise();
 
 		const timeoutId = setTimeout(() => {
-			console.log('promise');
 			myPromise();
 		}, 1000);
 

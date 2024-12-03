@@ -3,7 +3,7 @@
 }
 
 .paycheckForm__container {
-	@apply flex flex-col gap-5;
+	@apply flex flex-col items-center gap-5;
 }
 
 .paycheckForm__header {
