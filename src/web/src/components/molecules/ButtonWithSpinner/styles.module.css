@@ -1,47 +1,15 @@
-.button {
-	@apply relative flex min-w-min select-none items-center justify-center overflow-hidden whitespace-nowrap rounded-md font-medium transition-all;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
+.buttonWithSpinner {
+	@apply relative;
 }
 
-.fullWidth {
-	@apply w-full;
+.buttonWithSpinner__container {
+	@apply absolute inset-0 flex items-center justify-center;
 }
 
-.disabled {
-	@apply cursor-not-allowed;
+.buttonWithSpinner__spinner {
+	@apply h-[25px] w-[25px] animate-spin;
 }
 
-/* textAlign */
-.left {
-	@apply justify-start;
-}
-
-.right {
-	@apply justify-end;
-}
-
-/* Shape */
-.circular {
-	@apply rounded-full;
-}
-
-.rectangular {
-	@apply rounded-none;
-}
-
-.rounded {
-	@apply rounded-md;
-}
-
-/* Sizes */
-.md {
-	@apply text-button px-4 py-3;
-}
-
-/* Colors */
-/* 		Solid */
-.solid.primary {
-	@apply bg-primary text-white hover:opacity-80;
+.buttonWithSpinner__image {
+	@apply object-contain;
 }

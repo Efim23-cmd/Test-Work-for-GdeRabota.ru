@@ -1,39 +1,43 @@
 import clsx from 'clsx';
 
-import React from 'react';
+import { ForwardedRef, forwardRef } from 'react';
 
-import { ReactTag } from '@type/mutationComponent';
-
-import { ButtonProps } from '@atoms/Button/types';
-
-import styles from './styles.module.css';
 import { Button } from '@atoms/Button';
 
-function ButtonWithSpinnerInner<TTag extends ReactTag>(
-	{
-		as,
-		children,
-		color = 'primary',
-		variant = 'solid',
-		size = 'md',
-		shape = 'rounded',
-		textAlign = 'center',
-		fullWidth = false,
-		disabled,
-		className,
-		...props
-	}: ButtonProps<TTag>,
-	ref: React.ForwardedRef<TTag>,
-) {
-	return <Button className={styles.buttonWithSpinner}></Button>;
-}
+import { ButtonWithSpinnerProps } from './types';
 
-type ButtonType = <TTag extends ReactTag>(
-	props: ButtonProps<TTag> & React.RefAttributes<React.ComponentRef<TTag>>,
-) => ReturnType<typeof ButtonWithSpinnerInner>;
+import SpinnerSvgURL from './static/spinner.svg';
 
-const ButtonWithSpinner = React.forwardRef(
-	ButtonWithSpinnerInner,
-) as ButtonType;
+import styles from './styles.module.css';
 
-export { ButtonWithSpinner as Button };
+export const ButtonWithSpinner = forwardRef<
+	HTMLButtonElement,
+	ButtonWithSpinnerProps
+>(
+	(
+		{ className, loading, disabled, children, ...other },
+		ref: ForwardedRef<HTMLButtonElement>,
+	) => (
+		<Button
+			ref={ref}
+			className={clsx(styles.buttonWithSpinner, className)}
+			disabled={disabled || loading}
+			{...other}
+		>
+			<div
+				className={clsx({
+					invisible: loading,
+				})}
+			>
+				{children}
+			</div>
+			{loading && (
+				<div className={styles.buttonWithSpinner__container}>
+					<div className={styles.buttonWithSpinner__spinner}>
+						<img src={SpinnerSvgURL} alt="spinner" />
+					</div>
+				</div>
+			)}
+		</Button>
+	),
+);
