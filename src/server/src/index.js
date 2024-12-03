@@ -32,7 +32,7 @@ const EmployeeServices = jayson.server({
 app.use(bodyParser.json());
 app.post("/api", EmployeeServices.middleware());
 
-app.get("/pay/check/*", (request, response) => {
+app.get("/api/pay/check/*", (request, response) => {
   if (request.params[0] === pid) {
     callCount++;
 
