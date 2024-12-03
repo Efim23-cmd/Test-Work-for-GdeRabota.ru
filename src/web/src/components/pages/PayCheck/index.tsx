@@ -1,6 +1,9 @@
 import { BaseLayout } from '@pages/BaseLayout';
-import { PaymentForm } from '@templates/PaymentForm';
+
+import { useParams } from 'react-router';
 
 export default function PayCheckPage() {
-	return <BaseLayout>pay check</BaseLayout>;
+	const { id } = useParams();
+
+	return <BaseLayout>pay check {id}</BaseLayout>;
 }

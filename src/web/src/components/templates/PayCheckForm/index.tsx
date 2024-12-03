@@ -13,8 +13,6 @@ import { Input } from '@atoms/Input';
 import useForm from '@hooks/useForm';
 import useTextFormField, { TextField } from '@hooks/useTextFormField';
 
-import { yearAndMonth } from '@utils/validator/formatters/yearAndMonth';
-
 import {
 	length,
 	isNumberCard,
@@ -24,6 +22,7 @@ import {
 } from '@utils/validator';
 
 import styles from './styles.module.css';
+import { yearAndMonth } from '@utils/validator/formatters/yearAndMonth';
 
 type Request = {
 	jsonrpc: string;
@@ -47,7 +46,7 @@ type Response = {
 
 const JSON_RPC_VERSION = '2.0';
 
-export const PaymentForm = () => {
+export const PayCheckForm = () => {
 	const [uniqueId] = useState<string>(uuidv4);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
