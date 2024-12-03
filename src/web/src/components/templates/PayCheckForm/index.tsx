@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Paper } from '@atoms/Paper';
 
@@ -18,12 +18,17 @@ type PayCheckFormProps = {
 
 export const PayCheckForm = ({ pid }: PayCheckFormProps) => {
 	const [status, setStatus] = useState<Response['status']>('process');
+	const timeoutIdRef = useRef<NodeJS.Timeout>();
 
 	useEffect(() => {
 		const abortController = new AbortController();
 
 		const myPromise = async () => {
 			try {
+				if (timeoutIdRef.current) {
+					clearTimeout(timeoutIdRef.current);
+				}
+
 				const myFetch = await fetch(`/api/pay/check/${pid}`, {
 					method: 'GET',
 					signal: abortController.signal,
@@ -41,6 +46,12 @@ export const PayCheckForm = ({ pid }: PayCheckFormProps) => {
 
 				if (response.status) {
 					setStatus(response.status);
+
+					if (response.status === 'process') {
+						timeoutIdRef.current = setTimeout(() => {
+							myPromise();
+						}, 1000);
+					}
 				} else {
 					setStatus('fail');
 				}
@@ -50,15 +61,10 @@ export const PayCheckForm = ({ pid }: PayCheckFormProps) => {
 		};
 		myPromise();
 
-		const timeoutId = setTimeout(() => {
-			myPromise();
-		}, 1000);
-
 		return () => {
 			abortController.abort();
-			clearTimeout(timeoutId);
 		};
-	}, [pid]);
+	}, []);
 
 	return (
 		<Paper className={styles.paycheckForm}>
